@@ -45,7 +45,9 @@
 
 \begin{document}
 
-%%%%%%%%% TITLE - PLEASE UPDATE
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                             TITLE AND AUTHORS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \title{Motion Diffusion Model to Denoising Diffusion GAN: Efficient Motion Sampling}
 
 \author{
@@ -72,18 +74,24 @@
 
 
 \maketitle
-%%%%%%%%% ABSTRACT
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  ABSTRACT
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 \begin{abstract}
     All existing motion diffusion models use the standard diffusion process which yields high 
     quality samples. However, the standard process for these models can be inefficient. These are one of
     the challenges with the learning trilemma and this works concerns embedding an existing motion diffusion 
-    model into denoising diffusion GANs to create a hybrid architecture of the motion diffusion model. 
-    The goal of our work is to improving the sampling efficiency while maintaining the quality of the motion
-    samples.
+    model into denoising diffusion GANs to create a hybrid architecture of the motion diffusion model. This 
+    new hybrid model will satisfy the learning trilemma, thus improving the sampling speed when training and generating a motion sample.
+    \url{https://github.com/CAP6412-Group-4/denoising-diffusion-gan}
 \end{abstract}
 
 
-%%%%%%%%% BODY TEXT
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  INTRODUCTION
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Introduction}
 \label{sec:intro}
 
@@ -93,6 +101,10 @@
 
 \subsection{Integrating Motion Diffusion Model Into DDGAN}
 
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  RELATED WORK
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Related Work}
 \label{sec:related-work}
 
@@ -100,6 +112,10 @@
 
 \subsection{Denoising Diffusion GANs}
 
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  METHOD
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Method}
 \label{sec:method}
 
@@ -109,8 +125,16 @@
 
 \subsection{Training}
 
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  EXPERIMENTS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 \section{Experiments}
 \label{sec:experiments}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                                  RESULTS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 \section{Results}
 \label{sec:results}
@@ -119,13 +143,23 @@
 
 \subsection{Qualitative Results}
 
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                           ADDITIONAL APPLICATIONS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
 \section{Additional Applications}
 \label{sec:additional-applications}
+
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                         CONCLUSION AND FUTURE WORKS
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 \section{Conclusion and Future Works}
 \label{sec:conlusion}
 
-%%%%%%%%% REFERENCES
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+%                               REFERENCES
+% <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 {\small
 \bibliographystyle{ieee_fullname}
 \bibliography{egbib}
