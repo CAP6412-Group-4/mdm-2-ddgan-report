@@ -15,6 +15,7 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage[none]{hyphenat}
+\usepackage{array}
 
 
 % It is strongly recommended to use hyperref, especially for the review version.
@@ -129,16 +130,123 @@
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Experiments}
 \label{sec:experiments}
+Our implementation of MDM-2-Diffgan (M2D) is applied for the task of text-to-motion generation. We trained our models with T = 4 noising steps, 
+using a cosine noise schedule. Experiments were conducted using the Newton cluster which employs two NVIDIA V100 GPUs per node. During the 
+training process of our models, we conducted experiments with varying numbers of epochs, ranging from 200 to 1200, and determined that the 
+most optimal results were achieved with fewer epochs, specifically at the lower end of the range. Training on this lower range took approximately
+about a day.
+\\
 
+The HumanML3D dataset, which was also used by \cite{Tevet23}, was employed in our text-to-motion generation task. HumanML3D \cite{Guo_2022_CVPR}
+is a combination the HumanAct12 \cite{guo2020action2motion} and Amass \cite{Amass} datasets, which covers a broad range of activities, such as 'jumping', 
+dancing', and certain other acrobatics. The dataset contains 14,616 motion clips and 44,970 text descriptions.
+\\
+
+Our models were trained with a batch size of 128. Our generator used a learning rate of 0.0015, while the learning rate of the discriminator was slightly 
+larger at 0.0001. We employed the same parameters as \cite{Tevet23} did with the transformer encoder and used that as our generator: 8 layers, an embedding 
+dimension of 512, a GELU activation function, and dropout with a rate of 0.1. The discriminator uses an embedding dimension of 128, to go along with its 6 
+downsampling blocks. Its final output is 256 channels. Both the generator and discriminator use a softplus loss function, which is a smooth aproximation 
+of the ReLU. We conducted experiments with varying weights $\lambda$ for the geometric losses, but observed that our results were unsatisfactory when 
+$\lambda > 0$, which aligns with the findings reported in \cite{Tevet23}. Geometric losses are already represented in the HumanML3D ensemble, thus it is
+justifiable to omit them during training.
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  RESULTS
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Results}
 \label{sec:results}
+\subsection{Qualitative Results}
 
+Our qualitative findings illustrate that our model is capable of most generations that MDM can perform, but with a few discrepancies we should note. In the 
+final seconds of our generations, our results will generally exhibit a floor sliding effect, where after following the text prompt, the plane beneath the
+figure will shift. This is not the same as the foot contact sliding effect, since by this point the prompt has been completed and the generation is just 
+standing still. This effect is not present in the MDM generations, and we believe that this is due to the fact that the MDM model is trained on a dataset
+that does not contain this effect. We believe this is a result of some model instability, but at this time are unable to pinpoint the exact cause.
+\\
+
+Taking this into consideration, we maintain our conviction that the generations excel in capturing what the text-prompts indicate. We believe that the 
+distribution of HumanML3D is effectively captured by MDM-2-Diffgan, where we observed a favorable range of variability in generations. In the future, 
+we would like to perform a user study in order to obtain less biased interpretaions of our results. 
+
+\begin{figure}[h!]    
+    \centering
+    \begin{tabular}{cc}
+        \includegraphics[width=.2\textwidth]{imgs/spinning/frame_30.png}&\includegraphics[width=.2\textwidth]{imgs/spinning/frame_50.png}\\
+        \includegraphics[width=.2\textwidth]{imgs/spinning/frame_60.png}&\includegraphics[width=.2\textwidth]{imgs/spinning/frame_80.png}\\
+        \includegraphics[width=.2\textwidth]{imgs/spinning/frame_100.png}&\includegraphics[width=.2\textwidth]{imgs/spinning/frame_110.png}\\
+    \end{tabular}
+    \caption{The shows a person in the act of spinning. (Subject to change)}    
+    \label{fig:quant}
+\end{figure}
+% temporarily adding newpage until I find a better solution
+\newpage
 \subsection{Quantitative Results}
 
-\subsection{Qualitative Results}
+As a quick reminder, let's recall the metrics we use to evaluate our model. We use the R-Precision score, which measures the similarity between the generated
+motion and the text prompt. FID and Multimodal Distance scores measures the similarity between the generated motion and the real motion. Lastly, Diversity 
+measures the variability between the generated motions.
+\\
+
+We compare our results with the results of \cite{Tevet23} and other motion generation models, which are shown in Table \ref{tab:metrics} 
+and \ref{tab:metrics2}. We can observe that MDM-2-Diffgan performs fairly well when compared to MDM. While we don't set the state-of-the-art
+the state of the art in any of the metrics, we are able to achieve a higher R-Precision score than MDM. Also we have a comparable diversity and Multimodality
+scores, which is a good sign that our model is able to capture the distribution of the HumanML3D dataset. We observe a poor FID score when
+compared to MDM. 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|p{1.4cm}|p{1.8cm}|p{1.5cm}|c|c|c|c|c|c|}
+    \hline Method & $\begin{array}{l}\text { R Precision } \\
+    \text { (top } 3 \text { )↑ }\end{array}$ & FID $\downarrow$ & $\begin{array}{c}\text { Multimodal } \\
+    \text { Dist } \downarrow\end{array}$ \\
+    \hline Real & $0.797_{ \pm .002}$ & $0.002_{ \pm .000}$ & $2.974_{ \pm .008}$ \\
+    \hline JL2P & $0.486_{ \pm .002}$ & $11.02_{ \pm .046}$ & $5.296_{ \pm .008}$ \\
+    \hline $\mathrm{T} 2 \mathrm{M}$ & $0.740_{ \pm .003}$ & $1.067_{ \pm .002}$ & $3.340_{ \pm .008}$ \\
+    \hline MDM & $0.611_{ \pm .007}$ & $0.544_{ \pm .044}$ & $5.566_{ \pm .027}$ \\
+    \hline M2D & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
+    \hline
+    \end{tabular}
+    \caption{MDM-2-Diffgan accomplishes a higher R-Precision score than MDM, but a substantially lower FID score.}
+    \label{tab:metrics}
+\end{table}
+\begin{table}[h]
+    \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|c|c|c|c|c|c|}
+        \hline Method & Diversity $\rightarrow$ & Multimodality $\uparrow$ \\
+        \hline Real & $9.503_{ \pm .065}$ & - \\
+        \hline JL2P & $7.676_{ \pm .058}$ & - \\
+        \hline $\mathrm{T} 2 \mathrm{M}$ & $9.188_{ \pm .002}$ & $2.090_{ \pm .083}$ \\
+        \hline MDM & $9.559_{ \pm .086}$ & $2.799_{ \pm .072}$ \\
+        \hline M2D & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
+        \hline
+        \end{tabular}
+    \caption{We observe a similarity of around 0.1 for both metrics between MDM and MDM-2-Diffgan.}
+    \label{tab:metrics2}
+\end{table}
+
+\newpage
+
+We also perform a speed test, where we measure the time it takes MDM-2-Diffgan to generate motions. We perform 
+three experiments where we generate motions with: 1 sample $s$ and 1 repetition $r$, 3 samples $s$ and 1 repetition $r$, and 10 samples 
+$s$ and 3 $r$. From the results in Table \ref{tab:time}, we can observe that it takes MDM considerably longer to generate motions 
+than Motion-2-Diffgan. We can see that MDM takes 16.58 seconds to generate 1 sample and 1 repetition, while M2D takes 0.22 seconds. 
+What is noteworthy though, is how both models scale in as we increase the number of samples and repetitions. MDM takes 105.14 seconds 
+to generate 10 samples and 3 repetitions, whereas M2D only takes 0.64 seconds. This is a significant improvement in time, and shows that 
+MDM-2-Diffgan is able to scale much more effectively than MDM. 
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|c|ccc|}
+    \hline
+    Method & \multicolumn{1}{c|}{1s \& 1r} & \multicolumn{1}{c|}{3s \& 1r} & 10s \& 3r \\ \hline
+           & \multicolumn{3}{c|}{Seconds}                                              \\ \hline
+    MDM    & \multicolumn{1}{c|}{16.58}    & \multicolumn{1}{c|}{18.28}    & 105.14    \\ \hline
+    M2D    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
+    \end{tabular}
+    \caption{Our samples generated around 100x faster than those from MDM.}
+    \label{tab:time}
+\end{table}
+
+% temporarily adding newpage until I find a better solution
+\newpage
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                           ADDITIONAL APPLICATIONS
@@ -165,6 +273,7 @@ synthesis. \cite{Bhunia23}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                               REFERENCES
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+\newpage
 {\small
 \bibliographystyle{ieee_fullname}
 \bibliography{egbib}
