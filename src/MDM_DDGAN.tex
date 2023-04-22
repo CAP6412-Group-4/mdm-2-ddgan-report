@@ -80,7 +80,7 @@
 %                                  ABSTRACT
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \begin{abstract}
-    All existing motion diffusion models use the standard diffusion process which yields high 
+    All existing human motion diffusion models use the standard diffusion process which yields high 
     quality samples. However, the standard process for these models can be inefficient. These are one of
     the challenges with the learning trilemma and this works concerns embedding an existing motion diffusion 
     model into denoising diffusion GANs to create a hybrid architecture of the motion diffusion model. This 
@@ -110,10 +110,13 @@ The MDM can generate high quality motion samples and achieve good mode coverage.
 However, the generative model for MDM requires a great amount of timesteps in the reverse process which means 
 that the current MDM does not satisfy the fast sampling in the learning trilemma (Figure \ref{fig:intro-0}). 
 
-
 \subsection{Improving Sampling}
 
-
+Proposed by Xiao et al. (2022), the Denoising Diffusion GAN (DDGAN) is a novel generative model that utilizes 
+GANs to satisfy all three requirements of the generative learning trilemma. Specifically, the usage of 
+conditional GANs is what decreases the timesteps during sampling (Figure \ref{fig:intro-1}). As a result, training is a lot faster 
+compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as collapse and 
+overfitting \cite{Xiao22}.
 
 \begin{figure*}[h!]    
     \centering
@@ -129,6 +132,10 @@ that the current MDM does not satisfy the fast sampling in the learning trilemma
 
 \subsection{Integrating Motion Diffusion Model Into DDGAN}
 
+Initially, DDGAN was not designed for human motion data, but can be modified to do so. Specifically, DDGAN 
+is built to handle image loss not motion or geometric loss which are complete different from each other. 
+Therefore, we had to modify the DDGAN so that it can handle motion loss before integrating MDM to it. As for MDM, we needed to 
+remove some existing logic in the current worklflow to make the final addition of the DDGAN (Section \ref{sec:method}). 
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  RELATED WORK
@@ -377,6 +384,19 @@ is also due to the missing head position in the target pose.
 \bibliographystyle{ieee_fullname}
 \bibliography{egbib}
 }
+
+% TODO: Thought it would better to include the DDGAN in the appendix. Let me know if we need this.
+
+\appendix
+\section{Appendix}
+
+\begin{figure}[h]
+    \centering
+    \fbox{\includegraphics[width=0.47\textwidth]{imgs/introduction/ddgan.png}}
+
+    \caption{Denoising Diffusion GANs Architecture \cite{Xiao22}.}
+    \label{fig:intro-1}
+\end{figure}
 
 
 \end{document}
