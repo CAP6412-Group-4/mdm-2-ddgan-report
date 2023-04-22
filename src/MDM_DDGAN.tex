@@ -98,11 +98,22 @@
 Deep generative models had many breakthroughs in past years. Many applications have been built such as: 
 image synthesis, inpainting, image classification, segmentation, point clouds, and audio. One of the latest developments with 
 these models is the ability to generate human motions based on text inputs. However, there are three key requirements 
-that generative models cannot satisfy: high-quality sampling, mode coverage and diversity, and fast sampling.
+that generative models cannot satisfy: high-quality sampling, mode coverage and diversity, and fast sampling. 
 
 \subsection{Human Motion Diffusion Model}
 
+The human motion diffusion model (MDM) is a generative model that generates human motions. Given a text prompt 
+that describes the motion the applicatin would output a video that shows a skeleton figure perfoming the 
+action that was described in the text prompt. 
+
+The MDM can generate high quality motion samples and achieve good mode coverage. 
+However, the generative model for MDM requires a great amount of timesteps in the reverse process which means 
+that the current MDM does not satisfy the fast sampling in the learning trilemma (Figure \ref{fig:intro-0}). 
+
+
 \subsection{Improving Sampling}
+
+
 
 \begin{figure*}[h!]    
     \centering
