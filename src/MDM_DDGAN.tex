@@ -120,10 +120,30 @@
 \label{sec:method}
 
 \subsection{Motion Diffusion Model Integration}
+As implied by the title and previous text, our model aims to apply the sampling gains provided by \cite{Xiao22}. However in doing this we needed to make fundamental changes to how the MDM is constructed. More specifically, The model needs to ingest the latent $z$ variable as decribed in \cite{Xiao22}. Secondly, the DDGAN model needs to adjust it's dimensionality to take in frames of joint positions rather than taking a single image frame dimensions as input.
+
+\subsubsection{MDM Modifications}
+
+The MDM model as-provided already provides a fantastic framework for a generator model. Most of the model can remain intact however additions were made to make the model more versatile. The primary change occurs with the introduction of the latent $z$ variable. This variable is the mapping variable used for conditional score networks and allows the MDM model to sample from a non-normal distribution \cite{xiao2022tackling}. The latent $z$ variable is added to the other inputs described in \cite{Tevet23}. For our our purposes we use different $z$ mapping layers that discard image-specific normalization and change output channels to match the desired dimenions of the humanml dataset.  Our resulting MDM architecture is shown if figure \ref{fig:modified-mdm]}. \par
+
+\subsubsection{DDGAN Modifications}\label{sec:ddgan-mod}
+
+As for the denoising-diffusion-GAN (ddgan). We fixed the image dimension of the model to $120$. This is done to align with the dimensionality used in \cite{Guo_2022_CVPR}. Instead of using the generator provided by \cite{Xiao22} we replace the generator with our modified MDM architecture. As a result we are effectively using the discrminator to discriminate against samples our MDM model generates. \par 
+
+\begin{figure*}[h!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{imgs/modified-MDM.png}
+	\caption{Our modified MDM architecture based on \cite{Tevet23}, we introduce the latent $z$ variable by adding it with the timestep condition and the text prompt condition $c$}
+	\label{fig:modified-mdm]}
+\end{figure*}
 
 \subsection{Adapting The Loss}
 
-\subsection{Training}
+As described in \ref{sec:ddgan-mod} we are using the discriminator to validate the values given from our generator. The discrinator offers us adversarial loss, however, this loss along is not sufficient for our generator. Our generate being an MDM requires additional losses to produce high-quaility outputs. For this we borrow the geometric losses described in \cite{Tevet23}. Even though adversarial loss is not sufficient to properly to the model alone, it is still needed as a loss to propogate. As a result, we simply add adversarial loss to the geometric losses which results in equation \ref{eq:losses}.
+
+\begin{equation}\label{eq:losses}
+	\mathcal{L}_{all} = \lambda_{adv}\mathcal{L}_{adv} + \lambda_{pos}\mathcal{L}_{pos} + \lambda_{vel}\mathcal{L}_{vel} + \lambda_{foot}\mathcal{L}_{foot} 
+\end{equation}
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  EXPERIMENTS
