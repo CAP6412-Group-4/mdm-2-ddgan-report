@@ -260,14 +260,6 @@ justifiable to omit them during training.
 Our qualitative findings illustrate that our model is capable of most generations that MDM can perform. The generations excel in capturing what the text-prompts indicate. We believe that the 
 distribution of HumanML3D is effectively captured by MDM-2-Diffgan, where we observed a favorable range of variability in generations. In the future, 
 we would like to perform a user study in order to obtain less biased interpretaions of our results.
-
-\subsection{Limitations}
-Despite its realistic results, our model is not without its limitations. First of all, our model is only capable of generating motions
-upto 4 seconds in length which is short as compared to 9 second generations of MDM. After 4 seconds, the results from our model will generally exhibit a floor sliding effect, where after following the text prompt, the plane beneath the
-figure will shift. This is not the same as the foot contact sliding effect, since by this point the prompt has been completed and the generation is just 
-standing still. This effect also observed in the MDM generations but after 9 seconds. We believe this might be linked to the size of the latent space but
-we leave this for future work.
-
 \begin{figure}[H]    
     \centering
     \fbox{
@@ -280,8 +272,15 @@ we leave this for future work.
     \caption{The shows a person in the act of spinning. (Subject to change)}    
     \label{fig:quant}
 \end{figure}
-% temporarily adding newpage until I find a better solution
-\newpage
+
+\subsection{Limitations}
+Despite its realistic results, our model is not without its limitations. First of all, our model is only capable of generating motions
+upto 4 seconds in length which is short as compared to 9 second generations of MDM. After 4 seconds, the results from our model will generally exhibit a floor sliding effect, where after following the text prompt, the plane beneath the
+figure will shift. This is not the same as the foot contact sliding effect, since by this point the prompt has been completed and the generation is just 
+standing still. This effect also observed in the MDM generations but after 9 seconds. We believe this might be linked to the size of the latent space but
+we leave this for future work.
+
+
 \subsection{Quantitative Results}
 
 As a reminder, it is pertinent to recall the evaluation metrics employed in our model assessment. R-Precision and Multimodal-Distance scores measure the similarities 
@@ -296,7 +295,7 @@ the state of the art in any of the metrics, we are able to achieve a higher R-Pr
 scores, which is a good sign that our model is able to capture the distribution of the HumanML3D dataset. We observe a poor FID score when
 compared to MDM. 
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|p{1.4cm}|p{1.8cm}|p{1.5cm}|c|c|c|c|c|c|}
     \hline Method & $\begin{array}{l}\text { R Precision } \\
@@ -312,7 +311,7 @@ compared to MDM.
     \caption{MDM-2-DiffGAN accomplishes a higher R-Precision score than MDM, but a substantially lower FID score.}
     \label{tab:metrics}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|c|c|c|c|c|c|}
         \hline Method & Diversity $\rightarrow$ & Multimodality $\uparrow$ \\
         \hline Real & $9.503_{ \pm .065}$ & - \\
