@@ -219,7 +219,7 @@ As for the denoising-diffusion-GAN (ddgan). We fixed the image dimension of the 
 
 \subsection{Adapting The Loss}
 
-As described in \ref{sec:ddgan-mod} we are using the discriminator to validate the values given from our generator. The discrinator offers us adversarial loss, however, this loss along is not sufficient for our generator. Our generate being an MDM requires additional losses to produce high-quaility outputs. For this we borrow the geometric losses described in \cite{Tevet23}. Even though adversarial loss is not sufficient to properly to the model alone, it is still needed as a loss to propogate. As a result, we simply add adversarial loss to the geometric losses which results in equation \ref{eq:losses}.
+As described in \ref{sec:ddgan-mod} we are using the discriminator to validate the values given from our generator. The discriminator offers us adversarial loss, however, this loss alone is not sufficient for our generator. Our generator being an MDM requires additional losses to produce high-quality outputs. For this we borrow the geometric losses described in \cite{Tevet23}. Even though adversarial loss is not sufficient to train the model alone, it is still needed as a loss to propogate. As a result, we simply add adversarial loss to the geometric losses which results in equation \ref{eq:losses}.
 
 \begin{equation}\label{eq:losses}
 	\mathcal{L}_{all} = \lambda_{adv}\mathcal{L}_{adv} + \lambda_{pos}\mathcal{L}_{pos} + \lambda_{vel}\mathcal{L}_{vel} + \lambda_{foot}\mathcal{L}_{foot} 
