@@ -119,7 +119,7 @@ conditional GANs is what decreases the timesteps during sampling (Figure \ref{fi
 compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as mode collapse and 
 overfitting \cite{Xiao22}.
 
-\begin{figure*}[H]    
+\begin{figure*}[ht]    
     \centering
     \fbox{
     \begin{tabular}{cc}
@@ -211,7 +211,7 @@ The MDM model as-provided already provides a fantastic framework for a generator
 
 As for the denoising-diffusion-GAN (ddgan). We fixed the image dimension of the model to $120$. This is done to align with the dimensionality used in \cite{Guo_2022_CVPR}. Instead of using the generator provided by \cite{Xiao22} we replace the generator with our modified MDM architecture. As a result we are effectively using the discrminator to discriminate against samples our MDM model generates. \par 
 
-\begin{figure*}[H]
+\begin{figure*}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{imgs/modified-MDM.png}
 	\caption{Our modified MDM architecture based on \cite{Tevet23}, we introduce the latent $z$ variable by adding it with the timestep condition and the text prompt condition $c$}
