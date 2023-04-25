@@ -306,7 +306,7 @@ around 100x faster than MDM.
     \hline JL2P & $0.486_{ \pm .002}$ & $11.02_{ \pm .046}$ & $5.296_{ \pm .008}$ \\
     \hline $\mathrm{T} 2 \mathrm{M}$ & $0.740_{ \pm .003}$ & $1.067_{ \pm .002}$ & $3.340_{ \pm .008}$ \\
     \hline MDM & $0.611_{ \pm .007}$ & $0.544_{ \pm .044}$ & $5.566_{ \pm .027}$ \\
-    \hline M2D & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
+    \hline M2D (ours) & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
     \hline
     \end{tabular}
     \caption{MDM-2-DiffGAN accomplishes a higher R-Precision score than MDM, but a substantially lower FID score.}
@@ -319,14 +319,13 @@ around 100x faster than MDM.
         \hline JL2P & $7.676_{ \pm .058}$ & - \\
         \hline $\mathrm{T} 2 \mathrm{M}$ & $9.188_{ \pm .002}$ & $2.090_{ \pm .083}$ \\
         \hline MDM & $9.559_{ \pm .086}$ & $2.799_{ \pm .072}$ \\
-        \hline M2D & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
+        \hline M2D (ours) & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
         \hline
         \end{tabular}
     \caption{We observe a similarity of around 0.1 for both metrics between MDM and MDM-2-DiffGAN.}
     \label{tab:metrics2}
 \end{table}
 
-\newpage
 
 We perform sampling speed tests, where we measure the time it takes MDM-2-DiffGAN to generate motions. We perform 
 three experiments where we generate motions with: 1 sample $s$ and 1 repetition $r$, 3 samples $s$ and 1 repetition $r$, and 10 samples 
@@ -342,14 +341,11 @@ MDM-2-DiffGAN is able to scale much more effectively than MDM.
     Method & \multicolumn{1}{c|}{1s \& 1r} & \multicolumn{1}{c|}{3s \& 1r} & 10s \& 3r \\ \hline
            & \multicolumn{3}{c|}{Seconds}                                              \\ \hline
     MDM    & \multicolumn{1}{c|}{16.58}    & \multicolumn{1}{c|}{18.28}    & 105.14    \\ \hline
-    M2D    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
+    M2D (ours)    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
     \end{tabular}
     \caption{Our samples generated around 100x faster than those from MDM.}
     \label{tab:time}
 \end{table}
-
-% temporarily adding newpage until I find a better solution
-\newpage
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                           ADDITIONAL APPLICATIONS
