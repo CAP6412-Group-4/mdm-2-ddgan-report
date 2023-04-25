@@ -253,11 +253,11 @@ justifiable to omit them during training.
 
 \subsection{Unsuccessful Experiments}
 
-We performed several unsuccessful experiments in order to increase the quality of our generations, some of which we would like to highlight: \textbf{i.)} Once observing 
+We performed several unsuccessful experiments in order to increase the quality of our generations, some of which we would like to highlight: \textbf{i.)} On observing 
 that our discriminator consistently outsmarted the generator, we experimented with different architectures for our discriminator. One attempt was in using a discriminator that was
 not as complex. We used a discriminator with 4 downsampling blocks, instead of 6, and a final output of 128 channels, instead of 256.  Doing this actually 
-resulted in worse performance. \textbf{ii.)} Another attempt was in conditioning our discriminator with text-encoding. The idea behind this is that having a similar architecture 
-for boththe generator and discriminator would benefit the generator. We found the opposite to be true, as this introduces unwanted bias to our discriminator. \textbf{iii.)} Lastly,
+resulted in worse performance. \textbf{ii.)} Another attempt was in conditioning our discriminator with text-encoding. The idea behind this was that having a similar architecture 
+for both the generator and discriminator would benefit the generator. We found the opposite to be true, as this introduced undesirable bias in our discriminator. \textbf{iii.)} Lastly,
 we attempted to integrate PIDM with our motion generations. This is covered in more detail in Section \ref{sec:additional-applications}.
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -315,8 +315,8 @@ around 100x faster than MDM.
     \text { Dist } \downarrow\end{array}$ \\
     \hline Real & $0.797_{ \pm .002}$ & $0.002_{ \pm .000}$ & $2.974_{ \pm .008}$ \\
     \hline JL2P & $0.486_{ \pm .002}$ & $11.02_{ \pm .046}$ & $5.296_{ \pm .008}$ \\
-    \hline $\mathrm{T} 2 \mathrm{M}$ & $0.740_{ \pm .003}$ & $1.067_{ \pm .002}$ & $3.340_{ \pm .008}$ \\
-    \hline MDM & $0.611_{ \pm .007}$ & $0.544_{ \pm .044}$ & $5.566_{ \pm .027}$ \\
+    \hline $\mathrm{T} 2 \mathrm{M}$ & $\textbf{0.740}_{ \pm .003}$ & $1.067_{ \pm .002}$ & $\textbf{3.340}_{ \pm .008}$ \\
+    \hline MDM & $0.611_{ \pm .007}$ & $\textbf{0.544}_{ \pm .044}$ & $5.566_{ \pm .027}$ \\
     \hline M2D (ours) & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
     \hline
     \end{tabular}
@@ -329,7 +329,7 @@ around 100x faster than MDM.
         \hline Real & $9.503_{ \pm .065}$ & - \\
         \hline JL2P & $7.676_{ \pm .058}$ & - \\
         \hline $\mathrm{T} 2 \mathrm{M}$ & $9.188_{ \pm .002}$ & $2.090_{ \pm .083}$ \\
-        \hline MDM & $9.559_{ \pm .086}$ & $2.799_{ \pm .072}$ \\
+        \hline MDM & $\textbf{9.559}_{ \pm .086}$ & $\textbf{2.799}_{ \pm .072}$ \\
         \hline M2D (ours) & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
         \hline
         \end{tabular}
@@ -345,14 +345,14 @@ than MDM-2-DiffGAN. We can see that MDM takes 16.58 seconds to generate 1 sample
 What is noteworthy though, is how both models scale in as we increase the number of samples and repetitions. MDM takes 105.14 seconds 
 to generate 10 samples and 3 repetitions, whereas M2D only takes 0.64 seconds. This is a significant improvement in time, and shows that 
 MDM-2-DiffGAN is able to scale much more effectively than MDM.
-\begin{table}[]
+\begin{table}[H]
     \centering
     \begin{tabular}{|c|ccc|}
     \hline
     Method & \multicolumn{1}{c|}{1s \& 1r} & \multicolumn{1}{c|}{3s \& 1r} & 10s \& 3r \\ \hline
            & \multicolumn{3}{c|}{Seconds}                                              \\ \hline
     MDM    & \multicolumn{1}{c|}{16.58}    & \multicolumn{1}{c|}{18.28}    & 105.14    \\ \hline
-    M2D (ours)    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
+    M2D (ours)    & \multicolumn{1}{c|}{\textbf{0.22}}     & \multicolumn{1}{c|}{\textbf{0.31}}     & \textbf{0.64}      \\ \hline
     \end{tabular}
     \caption{Our samples generated around 100x faster than those from MDM.}
     \label{tab:time}
