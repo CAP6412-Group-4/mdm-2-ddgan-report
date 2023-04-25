@@ -291,9 +291,10 @@ generation given a single text prompt.
 
 We compare our results with the results of \cite{Tevet23} and other motion generation models, which are shown in Table \ref{tab:metrics} 
 and \ref{tab:metrics2}. We can observe that MDM-2-DiffGAN performs fairly well when compared to MDM. While we don't set the state-of-the-art
-the state of the art in any of the metrics, we are able to achieve a higher R-Precision score than MDM. Also we have a comparable diversity and Multimodality
+results in any of the evaluation metrics, we are able to achieve a higher R-Precision score than MDM. Also we have a comparable diversity and Multimodality
 scores, which is a good sign that our model is able to capture the distribution of the HumanML3D dataset. We observe a poor FID score when
-compared to MDM. 
+compared to MDM, which is likely because of the shorter generations of our model as discussed in the previous section.  Despite its shortcomings, MDM-2-DiffGAN is able to generate motions
+around 100x faster than MDM.
 
 \begin{table}[H]
     \centering
@@ -327,14 +328,13 @@ compared to MDM.
 
 \newpage
 
-We also perform a speed test, where we measure the time it takes MDM-2-DiffGAN to generate motions. We perform 
+We perform sampling speed tests, where we measure the time it takes MDM-2-DiffGAN to generate motions. We perform 
 three experiments where we generate motions with: 1 sample $s$ and 1 repetition $r$, 3 samples $s$ and 1 repetition $r$, and 10 samples 
 $s$ and 3 $r$. From the results in Table \ref{tab:time}, we can observe that it takes MDM considerably longer to generate motions 
 than MDM-2-DiffGAN. We can see that MDM takes 16.58 seconds to generate 1 sample and 1 repetition, while M2D takes 0.22 seconds. 
 What is noteworthy though, is how both models scale in as we increase the number of samples and repetitions. MDM takes 105.14 seconds 
 to generate 10 samples and 3 repetitions, whereas M2D only takes 0.64 seconds. This is a significant improvement in time, and shows that 
-MDM-2-DiffGAN is able to scale much more effectively than MDM. 
-
+MDM-2-DiffGAN is able to scale much more effectively than MDM.
 \begin{table}[]
     \centering
     \begin{tabular}{|c|ccc|}
