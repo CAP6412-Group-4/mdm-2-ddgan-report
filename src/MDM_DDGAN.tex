@@ -250,6 +250,16 @@ downsampling blocks. Its final output is 256 channels. Both the generator and di
 of the ReLU. We conducted experiments with varying weights $\lambda$ for the geometric losses, but observed that our results were unsatisfactory when 
 $\lambda > 0$, which aligns with the findings reported in \cite{Tevet23}. Geometric losses are already represented in the HumanML3D ensemble, thus it is
 justifiable to omit them during training.
+
+\subsection{Unsuccessful Experiments}
+
+We performed several unsuccessful experiments in order to increase the quality of our generations, some of which we would like to highlight: \textbf{i.)} Once observing 
+that our discriminator consistently outsmarted the generator, we experimented with different architectures for our discriminator. One attempt was in using a discriminator that was
+not as complex. We used a discriminator with 4 downsampling blocks, instead of 6, and a final output of 128 channels, instead of 256.  Doing this actually 
+resulted in worse performance. \textbf{ii.)} Another attempt was in conditioning our discriminator with text-encoding. The idea behind this is that having a similar architecture 
+for boththe generator and discriminator would benefit the generator. We found the opposite to be true, as this introduces unwanted bias to our discriminator. \textbf{iii.)} Lastly,
+we attempted to integrate PIDM with our motion generations. This is covered in more detail in Section \ref{sec:additional-applications}.
+
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  RESULTS
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -257,9 +267,10 @@ justifiable to omit them during training.
 \label{sec:results}
 \subsection{Qualitative Results}
 
-Our qualitative findings illustrate that our model is capable of most generations that MDM can perform. The generations excel in capturing what the text-prompts indicate. We believe that the 
-distribution of HumanML3D is effectively captured by MDM-2-Diffgan, where we observed a favorable range of variability in generations. In the future, 
-we would like to perform a user study in order to obtain less biased interpretaions of our results.
+Our qualitative findings illustrate that our model is capable of most generations that MDM can perform. The generations excel in capturing what the text-prompts 
+indicate. We believe that the distribution of HumanML3D is effectively captured by MDM-2-Diffgan, where we observed a favorable range of variability in generations. 
+In the future, we would like to perform a user study in order to obtain less biased interpretaions of our results. 
+
 \begin{figure}[H]    
     \centering
     \fbox{
