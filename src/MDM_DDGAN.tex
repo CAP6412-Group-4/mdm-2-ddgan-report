@@ -119,7 +119,7 @@ conditional GANs is what decreases the timesteps during sampling (Figure \ref{fi
 compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as mode collapse and 
 overfitting \cite{Xiao22}.
 
-\begin{figure*}[H]    
+\begin{figure*}[ht]    
     \centering
     \fbox{
     \begin{tabular}{cc}
@@ -211,7 +211,7 @@ The MDM model as-provided already provides a fantastic framework for a generator
 
 As for the denoising-diffusion-GAN (ddgan). We fixed the image dimension of the model to $120$. This is done to align with the dimensionality used in \cite{Guo_2022_CVPR}. Instead of using the generator provided by \cite{Xiao22} we replace the generator with our modified MDM architecture. As a result we are effectively using the discrminator to discriminate against samples our MDM model generates. \par 
 
-\begin{figure*}[H]
+\begin{figure*}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{imgs/modified-MDM.png}
 	\caption{Our modified MDM architecture based on \cite{Tevet23}, we introduce the latent $z$ variable by adding it with the timestep condition and the text prompt condition $c$}
@@ -317,7 +317,7 @@ around 100x faster than MDM.
     \hline JL2P & $0.486_{ \pm .002}$ & $11.02_{ \pm .046}$ & $5.296_{ \pm .008}$ \\
     \hline $\mathrm{T} 2 \mathrm{M}$ & $0.740_{ \pm .003}$ & $1.067_{ \pm .002}$ & $3.340_{ \pm .008}$ \\
     \hline MDM & $0.611_{ \pm .007}$ & $0.544_{ \pm .044}$ & $5.566_{ \pm .027}$ \\
-    \hline M2D & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
+    \hline M2D (ours) & $0.698_{ \pm .007}$ & $2.44_{ \pm .429}$ & $6.353_{ \pm .076}$ \\
     \hline
     \end{tabular}
     \caption{MDM-2-DiffGAN accomplishes a higher R-Precision score than MDM, but a substantially lower FID score.}
@@ -330,14 +330,13 @@ around 100x faster than MDM.
         \hline JL2P & $7.676_{ \pm .058}$ & - \\
         \hline $\mathrm{T} 2 \mathrm{M}$ & $9.188_{ \pm .002}$ & $2.090_{ \pm .083}$ \\
         \hline MDM & $9.559_{ \pm .086}$ & $2.799_{ \pm .072}$ \\
-        \hline M2D & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
+        \hline M2D (ours) & $9.416_{ \pm .057}$ & $2.671_{ \pm .025}$ \\
         \hline
         \end{tabular}
     \caption{We observe a similarity of around 0.1 for both metrics between MDM and MDM-2-DiffGAN.}
     \label{tab:metrics2}
 \end{table}
 
-\newpage
 
 We perform sampling speed tests, where we measure the time it takes MDM-2-DiffGAN to generate motions. We perform 
 three experiments where we generate motions with: 1 sample $s$ and 1 repetition $r$, 3 samples $s$ and 1 repetition $r$, and 10 samples 
@@ -353,14 +352,11 @@ MDM-2-DiffGAN is able to scale much more effectively than MDM.
     Method & \multicolumn{1}{c|}{1s \& 1r} & \multicolumn{1}{c|}{3s \& 1r} & 10s \& 3r \\ \hline
            & \multicolumn{3}{c|}{Seconds}                                              \\ \hline
     MDM    & \multicolumn{1}{c|}{16.58}    & \multicolumn{1}{c|}{18.28}    & 105.14    \\ \hline
-    M2D    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
+    M2D (ours)    & \multicolumn{1}{c|}{0.22}     & \multicolumn{1}{c|}{0.31}     & 0.64      \\ \hline
     \end{tabular}
     \caption{Our samples generated around 100x faster than those from MDM.}
     \label{tab:time}
 \end{table}
-
-% temporarily adding newpage until I find a better solution
-\newpage
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                           ADDITIONAL APPLICATIONS
@@ -368,7 +364,7 @@ MDM-2-DiffGAN is able to scale much more effectively than MDM.
 \section{Additional Applications}
 \label{sec:additional-applications}
 
-Once our hybrid motion diffusion model was complete and generating results, we want to see how we can
+Once our hybrid motion diffusion model was complete and generating results, we wanted to see how we can
 leverage the motion samples for other applications. 
 
 \subsection{Using Motion Samples for Person Image Synthesis (PIDM)}
@@ -382,13 +378,13 @@ leverage the motion samples for other applications.
 \end{figure}
 
 We wanted to use the produced motion samples from our hybrid as target poses or position to generate 
-photorealistic images of humans \cite{Bhunia23}. There are several pose-guided person image generation
-models but this model proposed by Ankan Bhunia et al. (2023) utilizes a denoising diffusion model to
+photorealistic images of humans. There are several pose-guided person image generation
+models but this model proposed by Ankan Bhunia et al. \cite{Bhunia23} utilizes a denoising diffusion model to
 generate the image samples (Figure \ref{fig:pidm-0}).
 
 The process goes as follows: given a target pose in the form of a skeleton and a reference image 
 of a person, in each diffusion step the model generates a sharper version of the final image until it
-reaches \emph{T} total diffusion steps (Figure \ref{fig:pidm-1}). The target pose is a color-coded where
+reaches \emph{T} total diffusion steps (Figure \ref{fig:pidm-1}). The target pose is color-coded where
 each color represents a joint or body of the person in the final sampled image. For instance, the green 
 joints in the skeleton represents the position of the head, the yellow shoulder represents the left shoulder 
 position, and so on.
@@ -404,7 +400,7 @@ position, and so on.
 In Figure \ref{fig:quant}, our motion diffusion model produces skeletons that perform certain actions. 
 However, our skeleton images are color-coded differently and are missing the head position of the person 
 generated. First step was to determine a mapping from the motion diffusion skeleton to the correct color-codes 
-for PIDM. Next, is to take the target pose image sample and create a numpy array representation of it. The PIDM 
+for PIDM. Next, was to take the target pose image sample and create a numpy array representation of it. The PIDM 
 diffusion model expected an input shape of 256x256x20 where the first 3 channels represent the pose skeleton 
 while the remaining 17 skeletons are gaussian keypoint maps. We were only able to reproduce the first 3 channels 
 from our MDM skeleton pose and created the remaining 17 channels with values of zeros.
@@ -423,7 +419,8 @@ After, getting our custom pose image to the appropraite array representation for
 we were able to finally test it and generate a sample pose-guided image. Unfortunately, the sampled image 
 did not produce the results we expected as the final person image appeared to be disfigured (Figure \ref{fig:pidm-2}). 
 This is probably due to the absence of the 17 guassian keypoint channels in our target pose skeleton and 
-is also due to the missing head position in the target pose.
+is also due to the missing head position in the target pose. Future work would be to find a way to generate
+a mapping from our skeleton to the correct pose features that the PIDM model expects.
 
 % TODO: Ron and Asad mentioned how long PIDM took to generate this sample image.
 
