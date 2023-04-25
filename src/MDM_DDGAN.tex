@@ -104,20 +104,18 @@ that generative models cannot satisfy: high-quality sampling, mode coverage and 
 
 \subsection{Human Motion Diffusion Model}
 
-The human motion diffusion model (MDM) is a generative model that generates human motions. Given a text prompt 
-that describes the motion the applicatin would output a video that shows a skeleton figure perfoming the 
-action that was described in the text prompt. 
-
-The MDM can generate high quality motion samples and achieve good mode coverage. 
-However, the generative model for MDM requires a great amount of timesteps in the reverse process which means 
-that the current MDM does not satisfy the fast sampling in the learning trilemma (Figure \ref{fig:intro-0}). 
+The human motion diffusion model (MDM) is a generative model that generates human motions. Given a text prompt describing the motion, the application would output a video showing a skeleton figure performing the action described in the text prompt. 
+The MDM can generate high-quality motion samples and achieve good mode coverage. 
+However, the generative model for MDM requires a significant number of timesteps in the reverse process, which means 
+The current MDM does not satisfy the fast sampling in the learning trilemma 
+ (Figure \ref{fig:intro-0}). 
 
 \subsection{Improving Sampling}
 
 Proposed by Xiao et al. (2022), the Denoising Diffusion GAN (DDGAN) is a novel generative model that utilizes 
 GANs to satisfy all three requirements of the generative learning trilemma. Specifically, the usage of 
 conditional GANs is what decreases the timesteps during sampling (Figure \ref{fig:intro-1}). As a result, training is a lot faster 
-compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as collapse and 
+compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as mode collapse and 
 overfitting \cite{Xiao22}.
 
 \begin{figure*}[h!]    
