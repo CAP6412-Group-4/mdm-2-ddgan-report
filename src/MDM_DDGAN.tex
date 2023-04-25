@@ -80,11 +80,13 @@
 %                                  ABSTRACT
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \begin{abstract}
-    All existing human motion diffusion models use the standard diffusion process which yields high 
-    quality samples. However, the standard process for these models can be inefficient. These are one of
-    the challenges with the learning trilemma and this works concerns embedding an existing motion diffusion 
-    model into denoising diffusion GANs to create a hybrid architecture of the motion diffusion model. This 
-    new hybrid model will satisfy the learning trilemma, thus improving the sampling speed when training and generating a motion sample.
+    Human motion modeling is important for many modern graphics applications.
+    It is a challenging task that requires skill and time. Recently, several motion generation
+    models have been proposed to automate this process. However, these models are not able to 
+    satisfy the generative trilemma: high-quality sampling, mode coverage and diversity, and fast sampling.
+    In this paper, we propose a novel generative model that utilizes a hybrid diffusion process
+    to generate human motions. We are able to improve the sampling speed by upto 100x over the 
+    state of the art approach while maintaining the quality of the generated motions.
     \url{https://github.com/CAP6412-Group-4/denoising-diffusion-gan}
 \end{abstract}
 
