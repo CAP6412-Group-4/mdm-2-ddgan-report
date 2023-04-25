@@ -142,13 +142,56 @@ remove some existing logic in the current worklflow to make the final addition o
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 \section{Related Work}
 \label{sec:related-work}
+Before we can discuss our work, we first need to discuss the foundations on 
+which our work is built upon. Specifically we look at the Diffusion model,
+the Human Motion Diffusion Model, and finally the Denoising Diffusion GAN.
 
 \subsection{Diffusion}
 
-\subsection{Human Motion Diffusion Model}
+Denoising diffusion probabilistic models (DDPMs) \cite{sohldickstein2015deep,NEURIPS2020_4c5bcfec} are a class of generative models that are able to generate high-quality images.
+These models use a diffusion process to iteratively transform a noise input into an output that approximates the target distribution.
+The diffusion process can be viewed as a continuous-time Markov chain that defines a sequence of conditional distributions that are used to approximate the target distribution.
+DDPMs have been shown to be effective in modeling complex high-dimensional data, such as natural images, and have achieved state-of-the-art performance on various image generation tasks.
+In the forward process, noise is added to the data according to a noise schedule $\beta_t$, in T steps:
 
+\begin{equation}
+    q\left(\mathrm{x}_{1: T} \mid \mathrm{x}_0\right)=\prod_{t \geq 1} q\left(\mathrm{x}_t \mid \mathrm{x}_{t-1}\right)
+\end{equation}
+
+\begin{equation}
+    \quad q\left(\mathrm{x}_t \mid \mathrm{x}_{t-1}\right)=\mathcal{N}\left(\mathrm{x}_t ; \sqrt{1-\beta_t} \mathrm{x}_{t-1}, \beta_t \mathrm{I}\right)
+\end{equation}
+
+In the reverse process, the noise is removed from the data in the same order:
+
+\begin{equation}
+    p_\theta\left(\mathrm{x}_{0: T}\right)=p\left(\mathrm{x}_T\right) \prod_{t \geq 1} p_\theta\left(\mathrm{x}_{t-1} \mid \mathrm{x}_t\right)
+\end{equation}
+
+\begin{equation}
+    \quad p_\theta\left(\mathrm{x}_{t-1} \mid \mathbf{x}_t\right)=\mathcal{N}\left(\mathrm{x}_{t-1} ; \boldsymbol{\mu}_\theta\left(\mathrm{x}_t, t\right), \sigma_t^2 \mathrm{I}\right)
+\end{equation}
+
+The main assumption on which this model is based is that the denoising distribution can be modeled by a Gaussian distribution and this assumption
+only holds when the denoising steps are large, in order of hundreds or thousands.
 \subsection{Denoising Diffusion GANs}
+The problem with having a large number of denoising steps is that the model is slow to sample from. Generations typically 
+take minutes. This is where the Denoising Diffusion GAN (DDGAN) \cite{Xiao22} comes in. The DDGAN is a generative model that
+utilizes GANs to satisfy all three requirements of the generative learning trilemma. It basically 
+stipulates that sampling from pure noise is not efficient and proposes that sampling from a latent space is better.
+This results in a multimodal denoising distribution which does not require a large number of denoising steps.
+The training process involves training a generator and a discriminator. The generator is trained to generate samples from the
+denoising distribution and the discriminator is trained to distinguish between samples from the denoising distribution and the
+data distribution. Adversarial loss is used to train the generator and discriminator.
 
+\subsection{Human Motion Diffusion Model}
+Realistic human motion generation is a challenging task due to the complex temporal structure of human motion data.
+The human motion diffusion model (HMDM) \cite{Tevet23} is a generative model that is able to generate realistic human motion sequences.
+This was the first work to apply the diffusion model to human motion data. The model is conditioned using CLIP \cite{radford2021learning}
+based textual embeddings of the motion description. The noised motion sequence is fed to the transformer model which
+is trained to denoise the motion sequence. Since this model relies on conventional diffusion process,
+sampling from it is very slow. As we will see in the next section, we will be able to speed up the sampling process
+by almost a factor of 100 by integrating the MDM with the DDGAN.
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  METHOD
