@@ -16,6 +16,7 @@
 \usepackage{booktabs}
 \usepackage[none]{hyphenat}
 \usepackage{array}
+\usepackage{float}
 
 
 % It is strongly recommended to use hyperref, especially for the review version.
@@ -118,7 +119,7 @@ conditional GANs is what decreases the timesteps during sampling (Figure \ref{fi
 compared to traditional diffusion models. Furthermore, this enhancement prevents issues such as mode collapse and 
 overfitting \cite{Xiao22}.
 
-\begin{figure*}[h!]    
+\begin{figure*}[H]    
     \centering
     \fbox{
     \begin{tabular}{cc}
@@ -210,7 +211,7 @@ The MDM model as-provided already provides a fantastic framework for a generator
 
 As for the denoising-diffusion-GAN (ddgan). We fixed the image dimension of the model to $120$. This is done to align with the dimensionality used in \cite{Guo_2022_CVPR}. Instead of using the generator provided by \cite{Xiao22} we replace the generator with our modified MDM architecture. As a result we are effectively using the discrminator to discriminate against samples our MDM model generates. \par 
 
-\begin{figure*}[h!t]
+\begin{figure*}[H]
 	\centering
 	\includegraphics[width=0.8\textwidth]{imgs/modified-MDM.png}
 	\caption{Our modified MDM architecture based on \cite{Tevet23}, we introduce the latent $z$ variable by adding it with the timestep condition and the text prompt condition $c$}
@@ -256,18 +257,18 @@ justifiable to omit them during training.
 \label{sec:results}
 \subsection{Qualitative Results}
 
-Our qualitative findings illustrate that our model is capable of most generations that MDM can perform, but with a few discrepancies we should note. In the 
-final seconds of our generations, our results will generally exhibit a floor sliding effect, where after following the text prompt, the plane beneath the
-figure will shift. This is not the same as the foot contact sliding effect, since by this point the prompt has been completed and the generation is just 
-standing still. This effect is not present in the MDM generations, and we believe that this is due to the fact that the MDM model is trained on a dataset
-that does not contain this effect. We believe this is a result of some model instability, but at this time are unable to pinpoint the exact cause.
-\\
-
-Taking this into consideration, we maintain our conviction that the generations excel in capturing what the text-prompts indicate. We believe that the 
+Our qualitative findings illustrate that our model is capable of most generations that MDM can perform. The generations excel in capturing what the text-prompts indicate. We believe that the 
 distribution of HumanML3D is effectively captured by MDM-2-Diffgan, where we observed a favorable range of variability in generations. In the future, 
-we would like to perform a user study in order to obtain less biased interpretaions of our results. 
+we would like to perform a user study in order to obtain less biased interpretaions of our results.
 
-\begin{figure}[h!]    
+\subsection{Limitations}
+Despite its realistic results, our model is not without its limitations. First of all, our model is only capable of generating motions
+upto 4 seconds in length which is short as compared to 9 second generations of MDM. After 4 seconds, the results from our model will generally exhibit a floor sliding effect, where after following the text prompt, the plane beneath the
+figure will shift. This is not the same as the foot contact sliding effect, since by this point the prompt has been completed and the generation is just 
+standing still. This effect also observed in the MDM generations but after 9 seconds. We believe this might be linked to the size of the latent space but
+we leave this for future work.
+
+\begin{figure}[H]    
     \centering
     \fbox{
     \begin{tabular}{cc}
@@ -362,7 +363,7 @@ leverage the motion samples for other applications.
 
 \subsection{Using Motion Samples for Person Image Synthesis (PIDM)}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=0.47\textwidth]{imgs/pidm/pidm_0.png}}
 
@@ -382,7 +383,7 @@ each color represents a joint or body of the person in the final sampled image. 
 joints in the skeleton represents the position of the head, the yellow shoulder represents the left shoulder 
 position, and so on.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=0.47\textwidth]{imgs/pidm/pidm_1.png}}
 
@@ -398,7 +399,7 @@ diffusion model expected an input shape of 256x256x20 where the first 3 channels
 while the remaining 17 skeletons are gaussian keypoint maps. We were only able to reproduce the first 3 channels 
 from our MDM skeleton pose and created the remaining 17 channels with values of zeros.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=0.45\textwidth]{imgs/pidm/pidm_2.png}}
 
@@ -445,7 +446,7 @@ and realistic human motion generation.
 \appendix
 \section{Appendix}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \fbox{\includegraphics[width=0.47\textwidth]{imgs/introduction/ddgan.png}}
 
