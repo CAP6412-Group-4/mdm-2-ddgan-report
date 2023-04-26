@@ -194,6 +194,14 @@ is trained to denoise the motion sequence. Since this model relies on convention
 sampling from it is very slow. As we will see in the next section, we will be able to speed up the sampling process
 by almost a factor of 100 by integrating the MDM with the DDGAN.
 
+
+\begin{figure}[H]
+    \centering
+    \fbox{\includegraphics[width=0.47\textwidth]{imgs/introduction/ddgan.png}}
+
+    \caption{Denoising Diffusion GANs Architecture \cite{Xiao22}.}
+    \label{fig:intro-1}
+\end{figure}
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  METHOD
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
@@ -259,6 +267,9 @@ not as complex. We used a discriminator with 4 downsampling blocks, instead of 6
 resulted in worse performance. \textbf{ii.)} Another attempt was in conditioning our discriminator with text-encoding. The idea behind this was that having a similar architecture 
 for both the generator and discriminator would benefit the generator. We found the opposite to be true, as this introduced undesirable bias in our discriminator. \textbf{iii.)} Lastly,
 we attempted to integrate PIDM with our motion generations. This is covered in more detail in Section \ref{sec:additional-applications}.
+\subsection{Improvements}
+During our experimentation, we noticed that the discriminator exhibited a consistently lower loss in comparison to the generator. In order to address this imbalance, we took the proactive measure of reducing the learning rate of the discriminator. This strategic adjustment resulted in a more balanced distribution of losses between both the generator and discriminator, ultimately leading to a significant enhancement in the overall quality of our generated output. Through this process, we were able to achieve a more stable and reliable performance from our model.
+We discovered that by utilizing the pre-trained weights of the generator from the MDM model, which shared the same transformer encoder architecture as our own generator, we were able to achieve remarkable improvements in a notably shorter amount of time. This can be attributed to the fact that the MDM model was already trained on the extensive HumanML3D dataset.
 
 % <><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 %                                  RESULTS
@@ -454,13 +465,6 @@ and realistic human motion generation.
 \appendix
 \section{Appendix}
 
-\begin{figure}[H]
-    \centering
-    \fbox{\includegraphics[width=0.47\textwidth]{imgs/introduction/ddgan.png}}
-
-    \caption{Denoising Diffusion GANs Architecture \cite{Xiao22}.}
-    \label{fig:intro-1}
-\end{figure}
 
 
 \end{document}
