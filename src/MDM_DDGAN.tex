@@ -358,7 +358,7 @@ around 100x faster than MDM.
 \end{table}
 
 
-We perform sampling speed tests, where we measure the time it takes MDM-2-DiffGAN to generate motions. We perform 
+We perform sampling speed tests, where we measure the time it takes MDM-2-DiffGAN to generate motions. We execute 
 three experiments where we generate motions with: 1 sample $s$ and 1 repetition $r$, 3 samples $s$ and 1 repetition $r$, and 10 samples 
 $s$ and 3 $r$. From the results in Table \ref{tab:time}, we can observe that it takes MDM considerably longer to generate motions 
 than MDM-2-DiffGAN. We can see that MDM takes 16.58 seconds to generate 1 sample and 1 repetition, while M2D takes 0.22 seconds. 
@@ -402,6 +402,7 @@ We wanted to use the produced motion samples from our hybrid as target poses or 
 photorealistic images of humans. There are several pose-guided person image generation
 models but this model proposed by Ankan Bhunia et al. \cite{Bhunia23} utilizes a denoising diffusion model to
 generate the image samples (Figure \ref{fig:pidm-0}).
+\\
 
 The process goes as follows: given a target pose in the form of a skeleton and a reference image 
 of a person, in each diffusion step the model generates a sharper version of the final image until it
@@ -420,12 +421,12 @@ position, and so on.
 
 In Figure \ref{fig:quant}, our motion diffusion model produces skeletons that perform certain actions. 
 However, our skeleton images are color-coded differently and are missing the head position of the person 
-generated. First step was to determine a mapping from the motion diffusion skeleton to the correct color-codes 
-for PIDM. Next, was to take the target pose image sample and create a numpy array representation of it. The PIDM 
+generated. The first step was to determine a mapping from the motion diffusion skeleton to the correct color-codes 
+for PIDM. Next, we wanted to take the target pose image sample and create a numpy array representation of it. The PIDM 
 diffusion model expected an input shape of 256x256x20 where the first 3 channels represent the pose skeleton 
 while the remaining 17 skeletons are gaussian keypoint maps. We were only able to reproduce the first 3 channels 
 from our MDM skeleton pose and created the remaining 17 channels with values of zeros.
-
+\\
 
 After, getting our custom pose image to the appropraite array representation for the diffusion model in PIDM, 
 we were able to finally test it and generate a sample pose-guided image. Unfortunately, the sampled image 
